@@ -11,15 +11,15 @@ class FlightRepo {
 
   FlightRepo() {
     _dio = Dio();
-    _dio!.interceptors
-        .add(LogInterceptor(requestBody: true, responseBody: true));
+    // _dio!.interceptors
+    //     .add(LogInterceptor(requestBody: true, responseBody: true));
   }
 
   Future<List<Flight>?> getAllAirport() async {
     try {
       var res = await _dio!.get(url);
-      var data = json.decode(res.data);
-      if (res.statusCode == 200 && data['all_flight'] != null) {
+      var data = res.data;
+      if (res.statusCode == 200) {
         List<Flight> load = [];
         var d = data['all_flight'] as List;
 

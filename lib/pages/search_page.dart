@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_search/widgets/widgets.dart';
 
 import '../cubit/flight_cubit.dart';
@@ -16,17 +17,19 @@ class _SearchPageState extends State<SearchPage> {
   late FlightCubit flightCubit;
   @override
   void initState() {
-    flightCubit = FlightCubit();
-    flightCubit.filterFlights('');
+    context.read<FlightCubit>().filterFlights('');
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: SearchBar(),
-        ),
-        body: SearchResult());
+        body: Column(
+      children: [
+        Container(
+            margin: EdgeInsets.fromLTRB(20, 50, 20, 0), child: SearchBar()),
+        Expanded(child: SearchResult()),
+      ],
+    ));
   }
 }

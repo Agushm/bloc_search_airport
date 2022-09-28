@@ -12,13 +12,14 @@ class FlightCubit extends Cubit<FlightState> {
 
   Future<List<Flight>?> getAllProfiles() async {
     var r = await FlightRepo().getAllAirport();
+
     return r;
   }
 
   void filterFlights(String query) async {
     var currentState = state;
 
-    if (flights == null) {
+    if (flights == null && state is FlightInitial) {
       emit(FlightLoading());
       var r = await getAllProfiles();
       if (r != null) {
@@ -28,8 +29,12 @@ class FlightCubit extends Cubit<FlightState> {
         return;
       }
     }
-    List<Flight> filtered =
-        flights!.where((e) => e.airportName.contains(query)).toList();
+    List<Flight> filtered = flights!
+        .where((e) =>
+            e.airportName.toLowerCase().contains(query) ||
+            e.locationName.toLowerCase().contains(query) ||
+            e.countryName.toLowerCase().contains(query))
+        .toList();
     List<FlightsByCountry> groupByCountry = [];
     filtered.forEach(
       (e) {

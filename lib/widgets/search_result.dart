@@ -1,17 +1,19 @@
 part of 'widgets.dart';
 
 class SearchResult extends StatelessWidget {
-  const SearchResult({Key? key}) : super(key: key);
+  SearchResult({Key? key}) : super(key: key);
 
+  final scaffoldState = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FlightCubit, FlightState>(builder: (context, state) {
+    return BlocBuilder<FlightCubit, FlightState>(builder: (_, state) {
       if (state is FlightLoading || state is FlightInitial) {
         return Center(
           child: CircularProgressIndicator(),
         );
       } else if (state is FlightLoaded) {
         return ListView.builder(
+            padding: EdgeInsets.symmetric(vertical: 20),
             itemCount: state.listFlights.length,
             itemBuilder: (context, index) {
               var data = state.listFlights[index];
@@ -22,7 +24,7 @@ class SearchResult extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 16.0),
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    data.country,
+                    data.country.toUpperCase(),
                     style: TextStyle(color: Colors.white),
                   ),
                 ),

@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<FlightCubit>(
-          create: (BuildContext context) => FlightCubit(),
+          create: (_) => FlightCubit(),
         ),
       ],
       child: MaterialApp(

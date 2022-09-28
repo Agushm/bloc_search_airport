@@ -10,7 +10,16 @@ class SearchBar extends StatelessWidget {
       builder: (context, state) {
         return TextFormField(
           controller: queryController,
-          onChanged: (value) {},
+          onChanged: (value) {
+            context.read<FlightCubit>().filterFlights(value.toLowerCase());
+          },
+          decoration: InputDecoration(
+            prefixIcon: Icon(Icons.search),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(width: 2),
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
         );
       },
     );
